@@ -55,6 +55,8 @@ def groupSolve(gid,uid,nickname,message):
 
     if content[0:7]=="/update":
         update()
+        sendMessage(gid,"数据已更新",1)
+        
     elif content[0:7]=="/reload":
         reLoad()
         sendMessage(gid,"重新加载配置文件",1)
