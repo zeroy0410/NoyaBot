@@ -3,9 +3,9 @@ from pymysql import NULL
 import requests
 from lib import dataBase,calculatorSympy
 
-talk_enable=set({892230531,878723783,675232402,996931274,754855499,977468014})
+talk_enable=set()
 talk_probability={}
-admin_uid=set({2020150384}) #管理员账号
+admin_uid=set() #管理员账号
 
 def update():
     with open("conf/talk_enable.noya","w",encoding='utf-8') as f:
@@ -15,7 +15,7 @@ def update():
     with open("conf/admin_uid.noya","w",encoding='utf-8') as f:
         f.write(str(admin_uid))
 
-def reload():
+def reLoad():
     with open("conf/talk_enable.noya","r",encoding='utf-8') as f:
         global talk_enable
         talk_enable=eval(f.read())
@@ -55,6 +55,9 @@ def groupSolve(gid,uid,nickname,message):
 
     if content[0:7]=="/update":
         update()
+    elif content[0:7]=="/reload":
+        reLoad()
+        sendMessage(gid,"重新加载配置文件",1)
 
     elif content[0:6]=="/teach":
         teach(gid,content[7:-1],1)

@@ -23,6 +23,6 @@ def analyse():
     
 
 if __name__=="__main__":
-    replyGroup.reload()
+    replyGroup.reLoad()
     app.run(port=5701,host="127.0.0.1",debug=True)   #调用run方法，设定端口号，启动服务
 
