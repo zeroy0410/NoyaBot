@@ -1,17 +1,35 @@
 from random import random
 from pymysql import NULL
-import requests,DataBase
-from sqlalchemy import false
-import calculatorSympy
+import requests
+from lib import dataBase,calculatorSympy
 
 talk_enable=set({892230531,878723783,675232402,996931274,754855499,977468014})
 talk_probability={}
 admin_uid=set({2020150384}) #管理员账号
 
+def update():
+    with open("conf/talk_enable.noya","w",encoding='utf-8') as f:
+        f.write(str(talk_enable))
+    with open("conf/talk_probability.noya","w",encoding='utf-8') as f:
+        f.write(str(talk_probability))
+    with open("conf/admin_uid.noya","w",encoding='utf-8') as f:
+        f.write(str(admin_uid))
+
+def reload():
+    with open("conf/talk_enable.noya","r",encoding='utf-8') as f:
+        global talk_enable
+        talk_enable=eval(f.read())
+    with open("conf/talk_probability.noya","r",encoding='utf-8') as f:
+        global talk_probability
+        talk_probability=eval(f.read())
+    with open("conf/admin_uid.noya","r",encoding='utf-8') as f:
+        global admin_uid
+        admin_uid=eval(f.read())
+
 def teach(uid,str,op):
     someNewRule=str.split("|")
     print(someNewRule)
-    DataBase.setAns(someNewRule[0],someNewRule[1])
+    dataBase.setAns(someNewRule[0],someNewRule[1])
     sendMessage(uid,"诺雅学会了哦~",op)
 
 def sendMessage(uid,message,op):
@@ -35,7 +53,10 @@ def groupSolve(gid,uid,nickname,message):
         content=content[5:-1]+' '
         if_Ask=True
 
-    if content[0:6]=="/teach":
+    if content[0:7]=="/update":
+        update()
+
+    elif content[0:6]=="/teach":
         teach(gid,content[7:-1],1)
 
     elif content[0:5]=="/echo":
@@ -48,8 +69,11 @@ def groupSolve(gid,uid,nickname,message):
 
     elif content[0:7]=="/delete":
         if uid in admin_uid:
-            DataBase.rmAns(content[8:-1])
-            sendMessage(gid,"删除成功",1)
+            op=dataBase.rmAns(content[8:-1])
+            if op:
+                sendMessage(gid,"删除成功",1)
+            else:
+                sendMessage(gid,"找不到数据",1)
         else:
             sendMessage(gid,"你没有权限！",1)
 
@@ -69,11 +93,11 @@ def groupSolve(gid,uid,nickname,message):
         else:
             sendMessage(gid,"你没有权限！",1)
 
-    elif (gid in talk_enable) and DataBase.getAns(content[0:-1])!=NULL:
+    elif (gid in talk_enable) and dataBase.getAns(content[0:-1])!=NULL:
         check=random()
         if gid not in talk_probability:
             talk_probability[gid]=0.3
         print(check,talk_probability[gid])
         if check<talk_probability[gid] or if_Ask==True:
             if_Ask=False
-            sendMessage(gid,DataBase.getAns(content[0:-1]),1)
+            sendMessage(gid,dataBase.getAns(content[0:-1]),1)
