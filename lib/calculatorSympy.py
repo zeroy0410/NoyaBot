@@ -1,6 +1,6 @@
 from sympy import *
 from sympy.abc import *
-
+from random import *
 filters = ["import", "open", "__", "eval", "exec", "\\", "dir", "sleep", 'add', 'class', 'contains', 'system', 'exit', 'calc', 'ans',
            'delattr', 'dir', 'doc', 'eq', 'format', 'getattribute', 'getitem',
            'getnewargs', 'gt', 'hash', 'init', 'init_subclass', 'iter',
