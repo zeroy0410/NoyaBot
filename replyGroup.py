@@ -4,7 +4,7 @@ import requests,DataBase
 from sqlalchemy import false
 import calculatorSympy
 
-talk_enable=set({892230531,878723783,675232402})
+talk_enable=set({892230531,878723783,675232402,996931274,754855499,977468014})
 talk_probability={}
 admin_uid=set({2020150384}) #管理员账号
 
@@ -17,6 +17,8 @@ def teach(uid,str,op):
 def sendMessage(uid,message,op):
     url='http://127.0.0.1:5700'
     data={}
+    if message=='':
+        return
     if op==0:
         data={'message_type':'private','user_id':uid,'message':message}
     else:
@@ -70,7 +72,7 @@ def groupSolve(gid,uid,nickname,message):
     elif (gid in talk_enable) and DataBase.getAns(content[0:-1])!=NULL:
         check=random()
         if gid not in talk_probability:
-            talk_probability[gid]=0.4
+            talk_probability[gid]=0.3
         print(check,talk_probability[gid])
         if check<talk_probability[gid] or if_Ask==True:
             if_Ask=False

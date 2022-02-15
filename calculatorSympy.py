@@ -1,7 +1,7 @@
 from sympy import *
 from sympy.abc import *
 
-filters=["import","open","__","eval","exec","\\","dir","sleep",'add', 'class', 'contains', 
+filters=["import","open","__","eval","exec","\\","dir","sleep",'add', 'class', 'contains', 'system','exit','calc','ans',
 'delattr', 'dir', 'doc', 'eq', 'format', 'getattribute', 'getitem', 
 'getnewargs', 'gt', 'hash', 'init', 'init_subclass', 'iter', 
 'len', 'lt', 'mod', 'mul', 'new', 
@@ -20,7 +20,7 @@ def calc(str_):
     str_=str_.replace("&#91;","[")
     str_=str_.replace("&#93;","]")
     ans_=str(eval(str_))
-    print(ans_)
+    # print(ans_)
     if len(ans_)>150:
         return "我会写，但这里地方太小，写不下"
     return str(eval(str_))
