@@ -2,6 +2,7 @@ from random import random
 import requests
 from sqlalchemy import null
 from lib import dataBase, calculatorSympy
+import requests
 
 talk_enable = set()
 talk_probability = {}
@@ -51,6 +52,12 @@ def sendMessage(uid, message, op):
         data = {'message_type': 'group', 'group_id': uid, 'message': message}
     requests.get(url+'/send_msg', params=data)
 
+def getHitokoto(str_):
+    url="https://v1.hitokoto.cn/?c="+str_
+    r=requests.get(url)
+    hitokoto=eval(r.text)
+    ans_=hitokoto['hitokoto']+'\nFrom: '+hitokoto['from']
+    return ans_
 
 def checkIsAsk(str_):
     if "/ask " == str_[0:5]:
@@ -73,6 +80,10 @@ def groupSolve(gid, uid, nickname, message):
     if content[0:7] == "/update":
         update()
         sendMessage(gid, "数据已更新", 1)
+
+    elif content[0:5]=="/hito":
+        ans_=getHitokoto(content[6:7])
+        sendMessage(gid,ans_,1)
 
     elif content[0:7] == "/reload":
         reLoad()
