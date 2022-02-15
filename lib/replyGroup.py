@@ -79,7 +79,10 @@ def groupSolve(gid, uid, nickname, message):
         sendMessage(gid, "重新加载配置文件", 1)
 
     elif content[0:6] == "/teach":
-        teach(gid, content[7:-1], 1)
+        if uid in admin_uid:
+            teach(gid, content[7:-1], 1)
+        else:
+            sendMessage(gid,"你没有权限！",1)
 
     elif content[0:5] == "/echo":
         sendMessage(gid, content[6:-1], 1)
