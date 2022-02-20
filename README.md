@@ -16,6 +16,8 @@
 /let talk_probability 一个浮点数 #闲聊时接话的概率
 /ask A #问话就会回答（无视上面两条指令的限制）
 /calc sympy库格式的一条算式 #不要尝试计算复杂度过高的式子，计算时间过长会阻塞进程
+/hito 参数# 一言参数参考https://hitokoto.cn/
+/trans 内容|from|to #如trans Hello World!|en|zh 英译中
 ```
 
 于5701端口监听。

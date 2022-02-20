@@ -86,10 +86,10 @@ def groupSolve(gid, uid, nickname, message):
         sendMessage(gid,ans_,1)
 
     elif content[0:6]=="/trans":
-        inp=content[7:-1].split(' ')
+        inp=content[7:-1].split('|')
         ans_=translate.trans(inp[0],inp[1],inp[2])
         sendMessage(gid,ans_,1)
-        
+
     elif content[0:7] == "/reload":
         reLoad()
         sendMessage(gid, "重新加载配置文件", 1)
