@@ -1,7 +1,7 @@
 from random import random
 import requests
 from sqlalchemy import null
-from lib import dataBase, calculatorSympy
+from lib import dataBase, calculatorSympy,translate
 import requests
 
 talk_enable = set()
@@ -85,6 +85,11 @@ def groupSolve(gid, uid, nickname, message):
         ans_=getHitokoto(content[6:7])
         sendMessage(gid,ans_,1)
 
+    elif content[0:6]=="/trans":
+        inp=content[7:-1].split(' ')
+        ans_=translate.trans(inp[0],inp[1],inp[2])
+        sendMessage(gid,ans_,1)
+        
     elif content[0:7] == "/reload":
         reLoad()
         sendMessage(gid, "重新加载配置文件", 1)
